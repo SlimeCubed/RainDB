@@ -298,6 +298,7 @@
             var partTipIds = [];
             var authorTipIds = [];
             var audbTipIds = [];
+            var trailerTipIds = []
             var mods_array = input_array;
             if (filter == "new")
                 mods_array = sortByKey(JSON.parse(JSON.stringify(input_array)), "order").reverse();
@@ -330,6 +331,8 @@
                 var audbstr = "";
                 if ("audb" in mods_array[i] && mods_array[i]["audb"] == true)
                     audbstr = '<img class="audbTooltip_'+i+'" src="assets/ico/update.png" title="Taken from AUDB"/> ';
+                if ("video" in mods_array[i])
+                    audbstr += '<a href="' + mods_array[i]["video"] + '" target="_blank"><img class="trailerTooltip_'+i+'" src="assets/ico/video.png" title="Click to view trailer video"/></a> ';
                 if ("standalone" in mods_array[i] && mods_array[i]["standalone"] == true)
                     appendStr += '<div style="display:inline-block; position:absolute; right:0; margin-right:20px;">'+audbstr+'<img class="partTooltip_'+i+'" src="assets/ico/standalone.png" title="Standalone Mod"/></div>';
                 else if ("content" in mods_array[i] && mods_array[i]["content"] == true)
@@ -346,6 +349,8 @@
                     partTipIds.push(i);
                 if ("audb" in mods_array[i])
                     audbTipIds.push(i);
+                if ("video" in mods_array[i])
+                    trailerTipIds.push(i);
                 
                 appendStr += "</h3>";
                 if ("code" in mods_array[i]) {
@@ -404,6 +409,8 @@
                 applyTooltip("authorTooltip", authorTipIds[i]);
             for (var i=0; i<audbTipIds.length; i++)
                 applyTooltip("audbTooltip", audbTipIds[i]);
+            for (var i=0; i<trailerTipIds.length; i++)
+                applyTooltip("trailerTooltip", trailerTipIds[i]);
         }
 
         function generateArenaHTML(div_id, input_array, filter) {
@@ -532,6 +539,8 @@
         Arenas.push({"name":"Boulder", "author":"Cappin", "order":22});
         Arenas.push({"name":"Orchard", "author":"Cappin", "order":12});
         Arenas.push({"name":"Crypt", "author":"Ehsper", "order":24});
+        Arenas.push({"name":"Boneyard", "author":"perr", "order":35}); // january 19, 2021
+        Arenas.push({"name":"Oasis", "author":"perr", "order":35}); // january 19, 2021
         Arenas.push({"name":"Peak", "author":"perr", "order":27}); // april 15, 2020
         Arenas.push({"name":"Crevice", "author":"perr", "order":27}); // april 15, 2020
         Arenas.push({"name":"Chimneys", "author":"perr", "order":28}); // april 21, 2020
@@ -541,14 +550,16 @@
         Arenas.push({"name":"Cell", "author":"Raggedy_Muffinz", "order":2});
         Arenas.push({"name":"SLUGSTAGE", "author":"Dakras", "order":15}); // november 21, 2018
         Arenas.push({"name":"Testing Chamber", "author":"Raggedy_Muffinz", "order":2});
-        Arenas.push({"name":"Skyway", "author":"perr", "order":28}); // april 21, 2020
         Arenas.push({"name":"Wall Jump Race", "author":"TheOddHawk", "order":29}) // may 20, 2020
+        Arenas.push({"name":"Skyway", "author":"perr", "order":28}); // april 21, 2020
+        Arenas.push({"name":"Piping", "author":"Niko", "order":32}); // january 17, 2021
         Arenas.push({"name":"Tramway", "author":"perr", "order":26}); // feburary 2, 2020
         Arenas.push({"name":"Garden", "author":"Ehsper", "order":24});
         Arenas.push({"name":"Funnels", "author":"Ehsper", "order":24});
         Arenas.push({"name":"Tanks", "author":"Ehsper", "order":24});
         Arenas.push({"name":"WaterChamber", "author":"lizardturtle", "order":11}); // september 22, 2018
         Arenas.push({"name":"Mosaic", "author":"GooGroker", "order":19}); // march 7, 2019
+        Arenas.push({"name":"Functions", "author":"Ubaser", "order":34}); // january 19, 2021
         Arenas.push({"name":"Cliff", "author":"Raggedy_Muffinz", "order":3}); // july 30, 2018
         Arenas.push({"name":"Pipepit", "author":"LemoCoffee", "order":31}); // november 29, 2020
         Arenas.push({"name":"Pipe Pit", "author":"GooGroker", "order":15.4}); // january 25, 2019
@@ -660,7 +671,7 @@
             "name":   "Checksum Fix",
             "author": "Garrakx",
             "type":   "Utility",
-            "url":    "https://drive.google.com/file/d/1CpyhzVxuBwoAVSQvtFTuDCj-tKXKeqE4/view",
+            "url":    "https://cdn.discordapp.com/attachments/431534164932689921/786711573354774577/FixedChecksumFix.dll",
             "thumb":  "previews/checksum.png",
             "desc":   "Disables checksum verification so that world files and save files can be edited without triggering the game's cheat protection.",
             "patch":  true
@@ -704,6 +715,16 @@
             "url": "https://drive.google.com/file/d/1dJKZvcgbTXwxOCCQyCAqKmj6Fzqw1FJT/view",
             "thumb": "previews/enumext.png",
             "desc":   "Makes certain modifications to the game's code easier.",
+            "mod": true
+        });
+
+        ToolMods.push({
+            "name":   "SlugBase",
+            "author": "Slime_Cubed",
+            "type":   "Utility",
+            "url":    "https://github.com/SlimeCubed/SlugBase/blob/master/Readme.md",
+            "thumb":  "previews/slugbase.png",
+            "desc":   "A framework that simplifies adding new characters to Rain World.",
             "mod": true
         });
 
@@ -943,7 +964,8 @@
             "desc":   "Local campaign co-op with extended configuration and piggy back riding. You can customize your campaign like your food bar, ability to hold back spears with Survivor/Monk and more!",
             "mod": true,
             "req":    "Requires ConfigMachine to be installed.",
-            "order": 76
+            "order": 76,
+            "video": "https://www.youtube.com/watch?v=eoGbBm6Nvjg"
         });
 
         Mods15.push({
@@ -954,7 +976,8 @@
             "thumb":  "previews/expedition.png",
             "desc":   "A new gamemode focused on completing challenges, earning points, unlocking new perks and abilities, and permadeath!",
             "mod":  true,
-            "order": 143
+            "order": 143,
+            "video": "https://www.youtube.com/watch?v=q-4RdlW2EvU"
         });
 
         Mods15.push({
@@ -966,7 +989,21 @@
             "thumb":  "previews/drought.png",
             "desc":   "An expansion adding four new regions and a new campaign following The Wanderer, a curious and calm slugcat with a deep desire to discover the ancient mysteries around it.",
             "patch": true,
-            "order": 106
+            "order": 106,
+            "video": "https://www.youtube.com/watch?v=-2xrE87xnW0"
+        });
+
+        Mods15.push({
+            "name":   "Arid Barrens",
+            "author": "Rain World Community",
+            "type":   "New Region",
+            "url":    "https://drive.google.com/drive/folders/1xM_t4WcF4CxAuF2eFewJt5BrkaARBk0Y",
+            "thumb":  "previews/arid_barrens.png",
+            "desc":   "An expansive wasteland connecting Shoreline and Farm Arrays. This is a community region project developed by many members of the Rain World Discord server.",
+            "mod": true,
+            "order": 165,
+            "req": "Requires CustomRegions to be installed. (See Arid Barrens Readme for installation instructions)",
+            "video": "https://www.youtube.com/watch?v=jaiZxc6tBW0"
         });
 
         Mods15.push({
@@ -978,7 +1015,8 @@
             "desc":   "Aether Ridge is a derelict desalination rig to the north of Sky Islands. Includes over 200 new rooms, six new arenas, and more. Fully compatible with The Root and Badlands.",
             "req":    "Requires Checksum Fix, Custom Regions Support, and Custom Assets to be installed.",
             "content": true,
-            "order": 127
+            "order": 127,
+            "video": "https://www.youtube.com/watch?v=H2QKsZeVXsI"
         });
 
         Mods15.push({
@@ -990,7 +1028,8 @@
             "desc":   "A region consisting of a large transmission spire in the western area of the world. Includes over 250 new screens, creature spawns for all gamemodes, arena unlocks, and some secrets to discover.",
             "mod": true,
             "req": "Requires CustomRegions, ConfigMachine, EnumExtender, and Custom Assets to be installed. (See README for additional requirements)",
-            "order": 157
+            "order": 157,
+            "video": "https://www.youtube.com/watch?v=_pUZdVm3IqI"
         });
 
         Mods15.push({
@@ -1002,7 +1041,7 @@
             "desc":   "A new region expanding on Subterranean, and The Exterior, with all new rooms. Made to give exploration focused players more Rain World to discover.",
             "content": true,
             "order": 115,
-            "req":    "Requires Checksum Fix and Custom Regions Support to be installed.",
+            "req":    "Requires Checksum Fix and Custom Regions Support to be installed."
         });
 
         Mods15.push({
@@ -1014,7 +1053,7 @@
             "desc":   "The Badlands is a region connecting Farm Arrays and Garbage Wastes. It features many secrets and unlockables, including three new arenas.",
             "mod":  true,
             "order": 120,
-            "req":    "Requires Checksum Fix to be installed.",
+            "req":    "Requires Checksum Fix to be installed."
         });
 
         Mods15.push({
@@ -1025,6 +1064,7 @@
             "code":   "code/side_house.html",
             "thumb":  "previews/sidehouse_preview.png",
             "desc":   "Adds a new region connecting Shoreline, 5P, and Depths. An amalgamation of many of the game's unused rooms. Also includes a couple custom unlockable maps for arena mode.",
+            "video": "https://www.youtube.com/watch?v=iibKGKT5OBg",
             "standalone": true,
             "order": 7
         });
@@ -1051,6 +1091,7 @@
             "content":  true,
             "order": 140,
             "req":    "Requires Checksum Fix to be installed.",
+            "video": "https://www.youtube.com/watch?v=Mc6OH-0fT5Q"
         });
 
         Mods15.push({
@@ -1087,7 +1128,7 @@
             "thumb":  "previews/manyfixes.png",
             "desc":   "A large batch of bug fixes, quality of life features, and performance enhancements added to the game, ported early from the upcoming More Slugcats Mod.",
             "mod":  true,
-            "order": 87,
+            "order": 87
         });
 
         Mods15.push({
@@ -1121,7 +1162,8 @@
             "thumb":  "previews/lancer.png",
             "desc":   "Play as The Lancer, a slugpup with a horn who specializes in melee combat with spears.",
             "mod": true,
-            "order": 72
+            "order": 72,
+            "video": "https://www.youtube.com/watch?v=g57JyLRM70M"
         });
 
         Mods15.push({
@@ -1132,7 +1174,7 @@
             "thumb":  "previews/spookcat.png",
             "desc":   "Zombifies slugcat and transforms the world into a dark and haunting nightmarescape. Turns your food meter into a health bar.",
             "patch": true,
-            "order": 71,
+            "order": 71
         });
 
         Mods15.push({
@@ -1161,9 +1203,9 @@
 
         Mods15.push({
             "name":   "Electric Cat",
-            "author": "Shiro_pb, ZangTang, Turtle",
+            "author": "Shiro_pb, ZangTang, Turtle, LeeMoriya",
             "type":   "Slugcat Abilities",
-            "url":    "https://drive.google.com/file/d/1jBW9qM-fdCffk7DAiu2bupWKTK8uNAbz/view",
+            "url":    "https://github.com/LeeMoriya/ElectricCat/blob/master/README.md",
             "thumb":  "previews/electric.png",
             "desc":   "Adds a fourth playable slugcat who has electric abilities.",
             "patch":  true,
@@ -1178,7 +1220,7 @@
             "thumb":  "previews/thicc.png",
             "desc":   "Changes slugcat's state depending on the amount of food eaten. On an empty stomach you're fast but weak, on a full stomach you're strong but slow.",
             "patch":  true,
-            "order": 68,
+            "order": 68
         });   
 
         Mods15.push({
@@ -1205,6 +1247,17 @@
         });
 
         Mods15.push({
+            "name":   "KarmaAppetite",
+            "author": "Dark-Gran",
+            "type":   "Slugcat Abilities",
+            "url":    "https://github.com/Dark-Gran/KarmaAppetite",
+            "thumb":  "previews/karmaapp.png",
+            "desc":   "Modifies the three original slugcats to have some new abilities. Particuarly, you gain progressively stronger abilities when you have high karma and a full stomach.",
+            "mod": true,
+            "order": 162
+        });
+
+        Mods15.push({
             "name":   "Fancy Slugcats",
             "author": "the one who screams",
             "type":   "Utility",
@@ -1213,7 +1266,7 @@
             "desc":   "Adds a variety of tools to customize your slugcat, including body proportions, colors, and even custom graphics and assets.",
             "req":    "Requires ConfigMachine, PublicityStunt, and Custom Assets to be installed",
             "mod":  true,
-            "order": 136,
+            "order": 136
         });
 
         Mods15.push({
@@ -1225,7 +1278,7 @@
             "desc":   "Allows a custom texture, color, and gradient to be added to slugcat tails.",
             "req":    "Requires ConfigMachine to be installed",
             "mod":  true,
-            "order": 147,
+            "order": 147
         });
 
         Mods15.push({
@@ -1264,6 +1317,18 @@
         });
 
         Mods15.push({
+            "name":   "Map Options",
+            "author": "SchuhBaum",
+            "type":   "Utility",
+            "url":    "https://drive.google.com/drive/folders/12g5w-I3u3gVmAYGaaOJt1rRaO1OmBmVU",
+            "thumb":  "previews/mapoptions.png",
+            "desc":   "Adds options to configure the in-game map, including map zoom, creature symbols, discovered map, instant reveal and layer focus.",
+            "req":    "Requires ConfigMachine to be installed.",
+            "mod": true,
+            "order": 171
+        });
+
+        Mods15.push({
             "name":   "Health Bars",
             "author": "ratrat44",
             "type":   "Utility",
@@ -1294,18 +1359,18 @@
             "desc":   "A mod that adds new blood effects to the game, making combat and creature interactions more visceral.",
             "req":    "Requires ConfigMachine to be installed.",
             "mod":  true,
-            "order": 131,
+            "order": 131
         });
 
         Mods15.push({
             "name":   "DungeonWorld",
             "author": "Zandra",
             "type":   "Randomizer",
-            "url":    "https://drive.google.com/file/d/1KXPIUxzWPj-d1bQZhi_H3jpRjCUKoa61/view",
+            "url":    "https://cdn.discordapp.com/attachments/431534164932689921/797633454560772166/DungeonWorld_fixed.dll",
             "thumb":  "previews/dungeon.png",
             "desc":   "Randomly mixes around the pipe destinations in every region, making the world unpredictable to navigate, and ever changing.",
             "patch":  true,
-            "order": 33,
+            "order": 33
         });
 
         Mods15.push({
@@ -1317,7 +1382,7 @@
             "desc":   "An add-on to DungeonWorld that makes gate connections randomized as well, so regions are visited in a random order.",
             "req":    "Requires DungeonWorld to be installed.",
             "content":  true,
-            "order": 62,
+            "order": 62
         });
 
          Mods15.push({
@@ -1351,7 +1416,7 @@
             "thumb":  "previews/master.png",
             "desc":   "A new game+ style mod that reorganizes the game's regions, trying to rekindle the feelings of when you first got lost in Rain World.",
             "content":  true,
-            "order": 129,
+            "order": 129
         });
 
         Mods15.push({
@@ -1373,7 +1438,7 @@
             "thumb":  "previews/sain.png",
             "desc":   "All randomly generated values in the game will now have fixed values.",
             "mod":  true,
-            "order": 91,
+            "order": 91
         });
 
         Mods15.push({
@@ -1384,7 +1449,7 @@
             "thumb":  "previews/beastmaster.png",
             "desc":   "Allows you to spawn a variety of creatures and items at will, in all game types including story mode and arena. Essentially, sandbox mode everywhere.",
             "mod":  true,
-            "order": 24,
+            "order": 24
         });
 
         Mods15.push({
@@ -1448,6 +1513,17 @@
         });
 
         Mods15.push({
+            "name":   "Pause Settings",
+            "author": "LeeMoriya",
+            "type":   "Utility",
+            "url":    "https://github.com/LeeMoriya/PauseSettings/blob/master/README.md",
+            "thumb":  "previews/pause_settings.png",
+            "desc":   "Adds volume control sliders to the game's pause menu, so audio can be adjusted without exiting your game session.",
+            "mod": true,
+            "order": 164
+        });
+
+        Mods15.push({
             "name":   "VibeWorld",
             "author": "HelloThere",
             "type":   "Audio",
@@ -1474,12 +1550,13 @@
             "name":   "Downpour",
             "author": "LeeMoriya",
             "type":   "Environmental",
-            "url":    "https://drive.google.com/file/d/1MgUhG9tElf8qMridT5LTS-B65LFldvFy/view",
+            "url":    "https://github.com/LeeMoriya/Downpour/blob/rain/README.md ",
             "thumb":  "previews/downpour.png",
             "desc":   "A mod that adds dynamic rainfall and other effects to Rain World, highly configurable.",
-            "req":    "Requires ConfigMachine and PublicityStunt to be installed.",
+            "req":    "Requires ConfigMachine to be installed.",
             "mod": true,
-            "order": 126
+            "order": 126,
+            "video": "https://www.youtube.com/watch?v=rosN0avujXw"
         });
 
         Mods15.push({
@@ -1512,7 +1589,7 @@
             "thumb":  "previews/lineofsight.png",
             "desc":   "Limits the player's field of view based on the surrounding terrain.",
             "mod":  true,
-            "order": 130,
+            "order": 130
         });
 
         Mods15.push({
@@ -1523,7 +1600,8 @@
             "thumb":  "previews/caecus.png",
             "desc":   "This mod makes you blind, replacing vision with hearing. You will sense other creatures if they move or make sounds.",
             "mod":   true,
-            "order": 95
+            "order": 95,
+            "video": "https://www.youtube.com/watch?v=jslHXfHXfWA"
         });
 
         Mods15.push({
@@ -1558,7 +1636,7 @@
             "thumb":  "previews/aqueous.png",
             "desc":   "Adds 4 new levels to enrich your arena experience, all loosely themed around water.",
             "content":  true,
-            "order": 88,
+            "order": 88
         });
 
         Mods15.push({
@@ -1603,7 +1681,7 @@
             "thumb":  "previews/halloweenas2020.png",
             "desc":   "This mod acts as a spiritual succesor to the orginal Halloweenas by Cappin, adding 4 new spooky arenas to the game.",
             "content": true,
-            "order": 150,
+            "order": 150
         });
 
         Mods15.push({
@@ -1614,7 +1692,7 @@
             "thumb":  "previews/halloweenas.png",
             "desc":   "Adds five new unique halloween arenas to spook up your competitive/sandbox experiences!",
             "content": true,
-            "order": 70,
+            "order": 70
         });
 
         Mods15.push({
@@ -1706,7 +1784,7 @@
             "thumb":  "previews/omnithrow.png",
             "desc":   "Gives slugcat the ability to throw objects in any direction.",
             "mod":  true,
-            "order": 25,
+            "order": 25
         });
 
         Mods15.push({
@@ -1717,7 +1795,7 @@
             "thumb":  "previews/omnithrow_mouse.png",
             "desc":   "Gives slugcat the ability to throw objects in the direction of the mouse cursor.",
             "mod":  true,
-            "order": 65,
+            "order": 65
         });
 
         /*Mods15.push({
@@ -1740,7 +1818,7 @@
             "desc":   "Makes the game much harder on all difficulties by changing creature spawns.",
             "content":  true,
             "req":    "Requires Checksum Fix to be installed.",
-            "order": 90,
+            "order": 90
         });
 
         Mods15.push({
@@ -1808,95 +1886,18 @@
             "desc":   "Improves Raindeer behavior. Allows you to wiggle in their horns to make them turn around. Also allows modders to use mirobirds and deer in any room they assign them access to.",
             "req":    "Requires PublicityStunt to be installed.",
             "mod":  true,
-            "order": 116,
+            "order": 116
         });
 
         Mods15.push({
-            "name":   "Quick Travel Mod",
-            "author": "Garrakx",
-            "type":   "Utility",
-            "url":    "https://drive.google.com/file/d/1onWaKzK4zW9NEhuy9YQ2veiQsJkT_oxa/view",
-            "thumb":  "previews/quicktravel.png",
-            "desc":   "Allows you to choose any specific region to spawn in when you load your save file, or start a new game.",
-            "patch":  true,
-            "order": 39,
-        }); 
-
-        Mods15.push({
-            "name":   "Carnivore Mod",
-            "author": "Garrakx",
-            "type":   "Game Tweak",
-            "url":    "https://drive.google.com/file/d/10TrzXuf-498To1ZC7jexZaLc-_Rt18VC/view",
-            "thumb":  "previews/carnivore.png",
-            "desc":   "Lets you eat corpses with any of the characters, both in Single Player mode and in Arena mode.",
-            "mod":  true,
-            "order":  75
-        });
-
-        Mods15.push({
-            "name":   "Arena Back Spears",
-            "author": "Garrakx",
-            "type":   "Game Tweak",
-            "url":    "https://drive.google.com/file/d/1wKdo3dIxFQR5RrovuT_mfVy1xl5tCelS/view",
-            "thumb":  "previews/arenabackspear.png",
-            "desc":   "Allows you to have a back spear in arena. Works for all four characters.",
-            "patch":  true,
-            "order": 73,
-        });
-
-        Mods15.push({
-            "name":   "Lycanthrope",
-            "author": "Fyre",
-            "type":   "Game Tweak",
-            "url":    "https://cdn.discordapp.com/attachments/481900360324218880/741726760470708274/Lycanthrope2.dll",
-            "thumb":  "previews/backspear.png",
-            "desc":   "If you have a spear on your back as hunter, as soon as you throw an item, the back spear will be shifted to the empty hand.",
-            "mod":  true,
-            "order": 101,
-        });
-
-        Mods15.push({
-            "name":   "Anti-Snatch-Spears",
-            "author": "Willburd",
-            "type":   "Game Tweak",
-            "url":    "https://drive.google.com/file/d/129giWXk0zJmlZPkl1F-Uigig2YhkApnj/view",
-            "thumb":  "previews/spearsteal.png",
-            "desc":   "Removes scavenger's ability to steal spears off of Hunter's back.",
-            "patch":  true,
-            "order": 53,
-        });
-
-        Mods15.push({
-            "name":   "Spear Swallow Mod",
-            "author": "Partially Sliced Bread",
-            "type":   "Game Tweak",
-            "url":    "https://drive.google.com/file/d/1LaVrb145C5HxDeHZo2zaX4l7zhFg8QPr/view",
-            "thumb":  "previews/spear_swallow.png",
-            "desc":   "Allows Slugcat to perform the impossible and swallow spears.",
-            "mod":  true,
-            "order": 128,
-        });
-
-        Mods15.push({
-            "name":   "Infinite Exploding Spear",
-            "author": "Fyre",
-            "type":   "Game Tweak",
-            "url":    "https://cdn.discordapp.com/attachments/431534164932689921/472051839639224320/ReusableSpears.dll",
-            "thumb":  "previews/infiniteExplode.png",
-            "desc":   "Makes the exploding spear item not destroy itself after it explodes.",
-            "patch":  true,
-            "order": 46,
-        });
-
-        Mods15.push({
-            "name":   "Don't Grab the Bats",
-            "author": "Snailturtle",
-            "type":   "Game Tweak",
-            "url":    "https://cdn.discordapp.com/attachments/421747949127598080/620328356956733447/bat.dll",
-            "thumb":  "previews/badfly.png",
-            "desc":   "Makes you not automatically grab batflies when you have an empty hand.",
-            "patch":   true,
-            "order": 103
+            "name":   "ScoreRush",
+            "author": "Henpemaz and SapphireWine",
+            "type":   "Game Mode",
+            "url":    "https://drive.google.com/file/d/1l0qaeqa5JR08m2jQdAYXWLAfPVEda-jV/view",
+            "thumb":  "previews/scorerush.png",
+            "desc":   "A modified Hunter game mode. Start the game in any shelter, and get as high of a score as you can in only three cycles.",
+            "mod": true,
+            "order": 163
         });
 
         Mods15.push({
@@ -1930,6 +1931,130 @@
             "desc":   "Manually adjust the number of cycles Hunter starts with, and the amount given to them by Five Pebbles.",
             "mod":   true,
             "order": 151
+        });
+
+ Mods15.push({
+            "name":   "Carnivore Mod",
+            "author": "Garrakx",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/10TrzXuf-498To1ZC7jexZaLc-_Rt18VC/view",
+            "thumb":  "previews/carnivore.png",
+            "desc":   "Lets you eat corpses with any of the characters, both in Single Player mode and in Arena mode.",
+            "mod":  true,
+            "order":  75
+        });
+
+        Mods15.push({
+            "name":   "ScavsOut!",
+            "author": "LeeMoriya",
+            "type":   "Game Tweak",
+            "url":    "https://github.com/LeeMoriya/ScavsOut/releases",
+            "thumb":  "previews/scavsout.png",
+            "desc":   "This mod adds restrictions for how scavengers can interact with shelters or behave inside of them.",
+            "mod":  true,
+            "req":  "Requires ConfigMachine to be installed.",
+            "order": 168
+        });
+
+        Mods15.push({
+            "name":   "Anti-Snatch-Spears",
+            "author": "Willburd",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/129giWXk0zJmlZPkl1F-Uigig2YhkApnj/view",
+            "thumb":  "previews/spearsteal.png",
+            "desc":   "Removes scavenger's ability to steal spears off of Hunter's back.",
+            "patch":  true,
+            "order": 53
+        });
+
+        Mods15.push({
+            "name":   "DislodgeSpears",
+            "author": "Topicular",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/1TEhfCZ1awU0WwRuk8QM02L2lm10srbP6/view",
+            "thumb":  "previews/dislodge_spears.png",
+            "desc":   "Adds a custom button that allows you to dislodge spears that are stuck in the terrain.",
+            "mod":  true,
+            "req":  "Requires ConfigMachine to be installed.",
+            "order": 166
+        });
+
+        Mods15.push({
+            "name":   "Arena Back Spears",
+            "author": "Garrakx",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/1wKdo3dIxFQR5RrovuT_mfVy1xl5tCelS/view",
+            "thumb":  "previews/arenabackspear.png",
+            "desc":   "Allows you to have a back spear in arena. Works for all four characters.",
+            "patch":  true,
+            "order": 73
+        });
+
+        Mods15.push({
+            "name":   "Lycanthrope",
+            "author": "Fyre",
+            "type":   "Game Tweak",
+            "url":    "https://cdn.discordapp.com/attachments/481900360324218880/741726760470708274/Lycanthrope2.dll",
+            "thumb":  "previews/backspear.png",
+            "desc":   "If you have a spear on your back as hunter, as soon as you throw an item, the back spear will be shifted to the empty hand.",
+            "mod":  true,
+            "order": 101
+        });
+
+        Mods15.push({
+            "name":   "Spear Swallow Mod",
+            "author": "Partially Sliced Bread",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/1LaVrb145C5HxDeHZo2zaX4l7zhFg8QPr/view",
+            "thumb":  "previews/spear_swallow.png",
+            "desc":   "Allows Slugcat to perform the impossible and swallow spears.",
+            "mod":  true,
+            "order": 128
+        });
+
+        Mods15.push({
+            "name":   "Infinite Exploding Spear",
+            "author": "Fyre",
+            "type":   "Game Tweak",
+            "url":    "https://cdn.discordapp.com/attachments/431534164932689921/472051839639224320/ReusableSpears.dll",
+            "thumb":  "previews/infiniteExplode.png",
+            "desc":   "Makes the exploding spear item not destroy itself after it explodes.",
+            "patch":  true,
+            "order": 46
+        });
+
+        Mods15.push({
+            "name":   "InfiniteSpears",
+            "author": "SchuhBaum",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/1tU-48CrO4iSH3y5IFZAq-go-XsOX0U-j/view",
+            "thumb":  "previews/infiniteSpears.png",
+            "desc":   "Every character can place a spear on their back, and with a spear on your back, you can infinitely spawn or despawn spears.",
+            "mod":  true,
+            "order": 170
+        });
+
+        Mods15.push({
+            "name":   "DamageConfig",
+            "author": "Pinecubes",
+            "type":   "Utility",
+            "url":    "https://drive.google.com/file/d/1xswEwBhxenyUFf_4gFZv9Jy7OrTz-nq_/view",
+            "thumb":  "previews/damageconfig.png",
+            "desc":   "Allows you to customize the amount of damage that spears and rocks do.",
+            "mod":  true,
+            "req":  "Requires ConfigMachine to be installed.",
+            "order": 169
+        });
+
+        Mods15.push({
+            "name":   "Don't Grab the Bats",
+            "author": "Snailturtle",
+            "type":   "Game Tweak",
+            "url":    "https://cdn.discordapp.com/attachments/421747949127598080/620328356956733447/bat.dll",
+            "thumb":  "previews/badfly.png",
+            "desc":   "Makes you not automatically grab batflies when you have an empty hand.",
+            "patch":   true,
+            "order": 103
         });
 
         Mods15.push({
@@ -2091,6 +2216,17 @@
         });
 
         Mods15.push({
+            "name":   "BubbleweedSaver",
+            "author": "Topicular",
+            "type":   "Game Tweak",
+            "url":    "https://drive.google.com/file/d/1KygEnHHfKPZ-ML_mWLLTGAiLB4LuE2dA/view",
+            "thumb":  "previews/bubble_saver.png",
+            "desc":   "Prevents Bubblegrass from being used until you are almost out of breath.",
+            "mod":  true,
+            "order": 167
+        });
+
+        Mods15.push({
             "name":   "Shrapnel Nukes",
             "author": "the one who screams",
             "type":   "New Items",
@@ -2099,7 +2235,7 @@
             "desc":   "Adds six tiers of exponentially multiplying bombs for use in things that require exponentially multiplying bombs.",
             "mod":    true,
             "req":    "Requires Publicity Stunt, Enum Extender, Sandbox Unlock Core, and Config Machine to be installed.",
-            "order": 123,
+            "order": 123
         });
 
         Mods15.push({
@@ -2266,7 +2402,7 @@
             "thumb":  "previews/nothreat.png",
             "desc":   "Removes all threat music from the game, making encounters more surprising and threats harder to detect.",
             "mod":  true,
-            "order": 89,
+            "order": 89
         });
 
         Mods15.push({
@@ -2288,7 +2424,7 @@
             "thumb":  "previews/sickness.png",
             "desc":   "Forces slugcat to always be in starvation mode. More food is needed, and slugcat will have trouble staying conscious. This mod takes effect even in arena mode.",
             "patch":  true,
-            "order": 34,
+            "order": 34
         });
 
         Mods15.push({
@@ -2299,7 +2435,7 @@
             "thumb":  "previews/lantern.png",
             "desc":   "Encourages the Overseer to shine light on you in dark areas whenever you have a lantern in your stomach.",
             "mod":  true,
-            "order": 85,
+            "order": 85
         });
 
         Mods15.push({
@@ -2322,7 +2458,7 @@
             "desc":   "Makes all regions completely sterile by preventing any creatures from spawning.",
             "req":   "Requires Rusty Machine to be installed.",
             "mod":  true,
-            "order": 48,
+            "order": 48
         });
 
         Mods15.push({
@@ -2333,7 +2469,7 @@
             "thumb":  "previews/deathfix.png",
             "desc":   "Fixes the bug where creatures can get permanently stuck in their dens after being injured.",
             "patch":  true,
-            "order": 86,
+            "order": 86
         });
 
         Mods15.push({
@@ -2359,6 +2495,17 @@
         });
 
         Mods15.push({
+            "name":   "Quick Travel Mod",
+            "author": "Garrakx",
+            "type":   "Utility",
+            "url":    "https://drive.google.com/file/d/1onWaKzK4zW9NEhuy9YQ2veiQsJkT_oxa/view",
+            "thumb":  "previews/quicktravel.png",
+            "desc":   "Allows you to choose any specific region to spawn in when you load your save file, or start a new game.",
+            "patch":  true,
+            "order": 39
+        }); 
+
+        Mods15.push({
             "name":   "The Root",
             "author": "Willburd",
             "type":   "New Region",
@@ -2367,7 +2514,7 @@
             "desc":   "A new region expanding on Subterranean, and The Exterior, with all new rooms. Made to give exploration focused players more Rain World to discover.",
             "content": true,
             "order": 10,
-            "req":    "Requires Checksum Fix to be installed.",
+            "req":    "Requires Checksum Fix to be installed."
         });
 
         Mods15.push({
@@ -2378,7 +2525,7 @@
             "thumb":  "previews/uwu.png",
             "desc":   "De UwU Mod twanswates aww of de text in Wain Wowwd into de much supewiow UwU wanguage, incwuding menyus, usew intewface and in-game diawogues! >w<",
             "mod":  true,
-            "order": 148,
+            "order": 148
         });
 
         Mods15.push({
@@ -2390,7 +2537,7 @@
             "desc":   "Changes the name of Farm Arrays to West Virginia.",
             "content":  true,
             "order": 69,
-            "req":    "Requires Checksum Fix to be installed.",
+            "req":    "Requires Checksum Fix to be installed."
         });
 
         Mods15.push({
@@ -2402,7 +2549,7 @@
             "desc":   "Changes the name of The Exterior to Australia.",
             "content":  true,
             "order": 153,
-            "req":    "Requires Checksum Fix and Custom Assets to be installed.",
+            "req":    "Requires Checksum Fix and Custom Assets to be installed."
         });
 
         Mods15.push({
@@ -2495,7 +2642,8 @@
             "type":   "Slugcat Abilities",
             "url":    "https://drive.google.com/file/d/0Bx3vgXPyiJG6SW1wVExJRTdqaWM/view",
             "thumb":  "previews/moreslugcats_preview.png",
-            "desc":   "Introduces five new playable slugcats into Rain World, each with their own unique playstyles, abilities, pros and cons."
+            "desc":   "Introduces five new playable slugcats into Rain World, each with their own unique playstyles, abilities, pros and cons.",
+            "video": "https://www.youtube.com/watch?v=pXaxqMb_R4A"
         });
 
         Mods101.push({
@@ -2513,7 +2661,8 @@
             "type":   "New Region",
             "url":    "https://drive.google.com/uc?export=download&confirm=lKvs&id=0Bx3vgXPyiJG6NXUtdDhLTnpEd00",
             "thumb":  "previews/sidehouse_preview.png",
-            "desc":   "Adds an entirely new region to Rain World that connects Shoreline, Five Pebbles, and the Depths. It's an amalgamation of many of the map files that went unused in the final game."
+            "desc":   "Adds an entirely new region to Rain World that connects Shoreline, Five Pebbles, and the Depths. It's an amalgamation of many of the map files that went unused in the final game.",
+            "video": "https://www.youtube.com/watch?v=iibKGKT5OBg"
         });
 
         Mods101.push({
@@ -2603,7 +2752,8 @@
             "type":   "Region Revamp",
             "url":    "https://drive.google.com/uc?export=download&id=0Bx3vgXPyiJG6S1c4cVVIQklUVEE",
             "thumb":  "http://eggzero.serv.pink/img/rainworld/screenshotUW.png",
-            "desc":   "A deadly conversion of The Leg, Underhang, and the Wall, infested with Daddy Long Legs."
+            "desc":   "A deadly conversion of The Leg, Underhang, and the Wall, infested with Daddy Long Legs.",
+            "video": "https://www.youtube.com/watch?v=x3qzYdPNnCo"
         });
 
 
